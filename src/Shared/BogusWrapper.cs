@@ -10,7 +10,7 @@ namespace RateMyManagementWASM.Shared
             var faker = new Faker<Company>()
                 .StrictMode(true)
                 .RuleFor(x => x.Name, (f, s) => f.Company.CompanyName())
-                .RuleFor(c => c.Description, (f, s) => f.Company.Bs())
+                .RuleFor(c => c.Description, (f, s) => f.Lorem.Sentences(5))
                 .RuleFor(c => c.Id, (f, s) => Guid.NewGuid().ToString())
                 .RuleFor(c => c.Locations, (f, s) => new List<Location>())
                 .RuleFor(c => c.Industry, (f, c) => f.Commerce.Department())

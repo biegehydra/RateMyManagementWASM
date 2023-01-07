@@ -4,7 +4,7 @@
     <RadzenText TextStyle="TextStyle.H2" TextAlign="TextAlign.Center">Rate My Management</RadzenText>
     <CompanySearch></CompanySearch>
     <RadzenText TextStyle="TextStyle.Body2" Style="margin-top:15px;">Enter a company name to get started</RadzenText>
-    <div class="alphabet-nav">
+    <div class="alph-search">
         <Paginiation MetaData="_pagingMetaData" SelectedPage="@OnPageSelected"></Paginiation>
     </div>
     @if (_loading)
@@ -15,14 +15,21 @@
     }
     @foreach (var companyDto in _currentPageCompanies)
     {
-            <RadzenCard Style="cursor: pointer; width: 95%; margin-top: 15px; position: relative; display: flex; justify-content:space-between" @onclick="@(() => navManager.NavigateTo($"/company/{companyDto.Id}"))">
-                <h1 style="position: absolute; top: 10px; right: 10px;">@companyDto.Rating.ToString("0.00")</h1>
-                <div>
-                    <h1>@companyDto.Name</h1>
-                    <h3>@companyDto.Industry</h3>
+        <RadzenCard Style="width: 95%; margin-top: 15px; display: flex;">
+            <div class="company-details">
+                <div class="company-details-left">
+                    <img class="circle" src="@companyDto.LogoUrl"/>
+                    <h3 align="center">@companyDto.Name</h3>
+                    <h5 align="center">@companyDto.Industry</h5>
+                    <h5 align="center"><span class="dissapear-on-small-screen">Rating</span> @companyDto.Rating.ToString("0.00")</h5>
+                    <a class="appear-small-screen" href="@($" /company/{companyDto.Id}")">More details</a>
                 </div>
-                <img class="circle" src="@companyDto.LogoUrl"/>
-            </RadzenCard>
+                <div class="dissapear-on-small-screen">
+                    <p>@companyDto.Description</p>
+                    <a href="@($" /company/{companyDto.Id}")">More details</a>
+                </div>
+            </div>
+        </RadzenCard>
     }
     <AdminDiv>
         <div class="position-fixed bottom-right">

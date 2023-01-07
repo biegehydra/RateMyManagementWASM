@@ -52,7 +52,7 @@ namespace RateMyManagementWASM.Client
         {
             services.AddSingleton<IAuthorizationHandler, LocationManagerHandler>();
             services.AddSingleton<IAuthorizationHandler, CompanyManagerHandler>();
-
+            services.AddSingleton<IAuthorizationHandler, AdminHandler>();
         }
     }
 }

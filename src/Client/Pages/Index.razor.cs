@@ -4,7 +4,6 @@ using RateMyManagementWASM.Client.Paginiation;
 using RateMyManagementWASM.Client.Services;
 using RateMyManagementWASM.Client.Shared.Layout;
 using RateMyManagementWASM.Shared;
-using RateMyManagementWASM.Shared.Data;
 using RateMyManagementWASM.Shared.Dtos;
 using RateMyManagementWASM.Shared.Requests;
 
@@ -32,6 +31,7 @@ namespace RateMyManagementWASM.Client.Pages
             await Task.Delay(1);
             _layout?.DisableSearch();
             _layout?.DisableLogo();
+            var test = BogusWrapper.GenerateFakeCompanies(20);
         }
 
         private async Task OnPageSelected(string str)
