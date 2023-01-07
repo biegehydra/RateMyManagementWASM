@@ -1,0 +1,8 @@
+﻿<div class="chip">
+    <div class="chip-text">
+        @ChildContent
+    </div>
+</div>
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

@@ -1,0 +1,30 @@
+﻿@page "/"
+<PageTitle>RateMyManagement</PageTitle>
+<div class="d-flex flex-column align-items-center position-relative">
+    <RadzenText TextStyle="TextStyle.H2" TextAlign="TextAlign.Center">Rate My Management</RadzenText>
+    <CompanySearch></CompanySearch>
+    <RadzenText TextStyle="TextStyle.Body2" Style="margin-top:15px;">Enter a company name to get started</RadzenText>
+    <div class="alphabet-nav">
+        <Paginiation MetaData="_pagingMetaData" SelectedPage="@OnPageSelected"></Paginiation>
+    </div>
+    @if (_loading)
+    {
+        <RadzenCard Style="width: 15em; margin-top: 10px;">
+            <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate"/>
+        </RadzenCard>
+    }
+    @foreach (var companyDto in _currentPageCompanies)
+    {
+            <RadzenCard Style="cursor: pointer; width: 95%; margin-top: 15px; position: relative; display: flex; justify-content:space-between" @onclick="@(() => navManager.NavigateTo($"/company/{companyDto.Id}"))">
+                <h1 style="position: absolute; top: 10px; right: 10px;">@companyDto.Rating.ToString("0.00")</h1>
+                <div>
+                    <h1>@companyDto.Name</h1>
+                    <h3>@companyDto.Industry</h3>
+                </div>
+                <img class="circle" src="@companyDto.LogoUrl"/>
+            </RadzenCard>
+    }
+    <div class="position-fixed bottom-right">
+        <RadzenButton Style="Background:red;" Size="ButtonSize.Small" Click="PopulateSite">Populate companies and locations</RadzenButton>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.page-container {
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    height: 100%;
+}
+.sides {
+    background: var(--rz-header-background-color);
+}
+@media only screen and (max-width: 600px) {
+    .sides {
+        display: none;
+    }
+    .page-container {
+        display: flex;
+        justify-content: center;
+    }
+}

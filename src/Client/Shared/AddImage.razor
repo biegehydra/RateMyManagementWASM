@@ -1,0 +1,16 @@
+﻿<div class="d-flex flex-column align-items-center align-content-center">
+    @if (_uploadResponse != null)
+    {
+        <img src="@_uploadResponse.data.display_url"/>
+    }
+    else if (_displayUrl != null)
+    {
+        <img src="@_displayUrl" />
+    }
+    @if (_error)
+    {
+        <p style="color: red">Error: @_errorMessage</p>
+    }
+
+    <InputFile OnChange="@LoadFiles"></InputFile>
+</div>

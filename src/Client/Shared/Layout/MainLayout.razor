@@ -1,0 +1,69 @@
+﻿@implements IDisposable
+@inherits LayoutComponentBase
+@inject NavigationManager navManager;
+<PageTitle>RateMyManagement</PageTitle>
+
+<RadzenContextMenu />
+<div class="page">
+    <main>
+        <div class="top-row">
+            <div>
+                @if (_displayLogo)
+                {
+                    <h1 class="short-title" style="cursor: pointer" @onclick="@(() => navManager.NavigateTo("/"))">RMM</h1>
+                    <h1 class="long-title" style="cursor: pointer" @onclick="@(() => navManager.NavigateTo("/"))">Rate My Management</h1>
+                }
+                @if (_searchEnabled)
+                {
+                    <CompanySearch></CompanySearch>
+                }
+            </div>
+            <div style="display: flex; align-items: center;">
+                <LoginDisplay/>
+            </div>
+        </div>
+
+        <article>
+            <CascadingValue TValue="MainLayout" Value="this">
+                @Body
+            </CascadingValue>
+        </article>
+    </main>
+</div>
+@code
+{
+    private bool _searchEnabled = true;
+    private bool _displayLogo = true;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        navManager.LocationChanged += OnLocationChanged;
+
+    }
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs args)
+    {
+        EnableAllSections();
+        StateHasChanged();
+    }
+    private void EnableAllSections()
+    {
+        _searchEnabled = true;
+        _displayLogo = true;
+    }
+    public void DisableSearch()
+    {
+        _searchEnabled = false;
+        StateHasChanged();
+    }
+
+    public void DisableLogo()
+    {
+        _displayLogo = false;
+        StateHasChanged();
+    }
+
+    void IDisposable.Dispose()
+    {
+        navManager.LocationChanged -= OnLocationChanged;
+    }
+}

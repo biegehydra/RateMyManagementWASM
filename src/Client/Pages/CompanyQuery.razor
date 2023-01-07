@@ -1,0 +1,32 @@
+﻿@page "/search/company/{query}"
+<div class="page-container">
+    @if (_loading)
+    {
+        <RadzenCard Style="width: 15em; margin-top: 10px;">
+            <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate"/>
+        </RadzenCard>
+    }
+    else
+    {
+        <p style="display: flex; justify-content: center">Results: @CompaniesQueried.Count</p>
+        @if (CompaniesQueried.Count == 0)
+        {
+            <RadzenCard Style="margin: 10px;">
+                <h1>No Companies found</h1>
+                <p>Think were missing your company?</p>
+                <a href="/create/company/">Click her to create company</a>
+            </RadzenCard>
+        }
+    }
+    @foreach (var company in CompaniesQueried)
+    {
+        <RadzenCard Style="cursor: pointer; width: 95%; margin-top: 15px; position: relative; display: flex; justify-content: space-between" @onclick="@(()=> NavigateToCompany(company.Id))">
+            <h1 style="position: absolute; top: 10px; right: 10px;">@company.GetRating().ToString("0.00")</h1>
+            <div>
+                <h1>@company.Name</h1>
+                <h3>@company.Industry</h3>
+            </div>
+            <img style="border-radius: 50%; height: 5em; width: 5em; margin-right: 5em;" src="@company.GetLogoUrl()"/>
+        </RadzenCard>
+    }
+</div>

@@ -1,0 +1,21 @@
+﻿@inject NavigationManager navManager;
+<RadzenTextBox Placeholder="Company name" @bind-Value="_query" @onkeyup="OnKeyUp"></RadzenTextBox>
+
+@code {
+    private string _query = string.Empty;
+
+    private async Task OnKeyUp(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            if (string.IsNullOrWhiteSpace(_query))
+            {
+                navManager.NavigateTo($"/");
+            }
+            else
+            {
+                navManager.NavigateTo($"/search/company/{_query}");
+            }
+        }
+    }
+}

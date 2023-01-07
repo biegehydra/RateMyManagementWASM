@@ -1,0 +1,33 @@
+﻿@page "/create/company/"
+@layout MainLayoutWithSides
+<div class="page-container">
+    <RadzenCard Style="margin: 10px;">
+        <RadzenTemplateForm TItem="Company" Data="@(new Company())">
+            <div class="d-flex align-items-center">
+                <h2 class="m-2">Name:</h2>
+                <RadzenTextBox @bind-Value="_companyName" Name="name"></RadzenTextBox>
+                <RadzenRequiredValidator Component="name" DefaultValue="@string.Empty"></RadzenRequiredValidator>
+            </div>
+            <div class="d-flex align-items-center">
+                <h2 class="m-2">Industry:</h2>
+                <RadzenTextBox @bind-Value="_companyIndustry" Name="industry"></RadzenTextBox>
+                <RadzenRequiredValidator Component="industry" DefaultValue="@string.Empty"></RadzenRequiredValidator>
+            </div>
+            <div class="d-flex align-items-center">
+                <h2 class="m-2">Description:</h2>
+                <RadzenTextArea @bind-Value="_companyDescription" Name="description"></RadzenTextArea>
+                <RadzenRequiredValidator Component="description" DefaultValue="@string.Empty"></RadzenRequiredValidator>
+            </div>
+            <div>
+                <AddImage ImageUploaded="OnImageUploaded"></AddImage>
+            </div>
+            <div>
+                <RadzenButton ButtonType="ButtonType.Submit" Click="CreateCompanyAsync">Submit</RadzenButton>
+            </div>
+            @if (_error)
+            {
+                <p style="color: red">@_errorMessage</p>
+            }
+        </RadzenTemplateForm>
+    </RadzenCard>
+</div>

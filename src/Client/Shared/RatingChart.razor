@@ -1,0 +1,52 @@
+﻿<RadzenChart>
+    <RadzenColumnSeries Data="@(Data ?? GetData())" CategoryProperty="Stars" ValueProperty="Frequency" Title="Frequency">
+        <TooltipTemplate>
+            <div>
+                <p>Frequency: @context.Frequency</p>
+                <p>Stars: @context.Stars</p>
+            </div>
+        </TooltipTemplate>
+    </RadzenColumnSeries>
+    @if (Data.All(x => x.Frequency == 0))
+    {
+        <RadzenValueAxis Step="2" Min="0" Max="10">
+            <RadzenAxisTitle Text="Frequency"></RadzenAxisTitle>
+        </RadzenValueAxis>
+    }
+    else
+    {
+        <RadzenValueAxis Step="2" Min="0" >
+            <RadzenAxisTitle Text="Frequency"></RadzenAxisTitle>
+        </RadzenValueAxis>
+    }
+    <RadzenCategoryAxis Min="0" Max="5" Step="1">
+        <RadzenAxisTitle Text="Stars"></RadzenAxisTitle>
+    </RadzenCategoryAxis>
+    <RadzenGridLines Visible="true"></RadzenGridLines>
+    <RadzenLegend Visible="false"></RadzenLegend>
+</RadzenChart>
+@code {
+    class DataItem
+    {
+        public int Stars { get; set; }
+        public int Frequency { get; set; }
+    }
+    [Parameter] public IEnumerable<int>? Ratings { get; set; }
+
+    private DataItem[]? Data;
+    private DataItem[] GetData()
+    {
+        if (Ratings == null) return null;
+        var result = new DataItem[5];
+        for (int i = 1; i <= 5; i++)
+        {
+            var data = new DataItem
+            {
+                Stars = i,
+                Frequency = Ratings.Count(x => x == i)
+            };
+            result[i - 1] = data;
+        }
+        return Data = result;
+    }
+}

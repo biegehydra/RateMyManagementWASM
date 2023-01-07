@@ -1,0 +1,59 @@
+﻿@using RateMyManagementWASM.Shared.Dtos
+<RadzenTemplateForm TItem="LocationReviewDto" Data="LocationReviewDto" Style="margin:10px; width: 95%;" Submit="@OnSubmitReview" >
+    <RadzenCard>
+        @if (!_creatingReview)
+        {
+            <AuthorizeView Context="context2" Policy="@PolicyTypes.AuthorizedUser.ToString()">
+                <Authorized>
+                    <div style="display: flex; justify-content: space-between">
+                        <RadzenButton Click="@(() => _creatingReview = true)" Style="height: 3em;">Create review</RadzenButton>
+                    </div>
+                </Authorized>
+                <NotAuthorized>
+                    <div>
+                        <RadzenButton Disabled="true">Create review</RadzenButton>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+        }
+        else
+        {
+            <div class="d-flex">
+                <div class="d-flex flex-column align-items-center">
+                    You Are?
+                    <RadzenRadioButtonList Name="ReviewType" TValue="int" @bind-Value="ReviewType">
+                        <Items>
+                            <RadzenRadioButtonListItem Text="Employee" Value="1"/>
+                            <RadzenRadioButtonListItem Text="Customer" Value="2"/>
+                        </Items>
+                    </RadzenRadioButtonList>
+                    <RadzenRequiredValidator Component="ReviewType" Text="Review type is required!" DefaultValue="0"/>
+                    <div class="m-1">
+                        <RadzenTextBox Disabled="true" Value="@_claimsPrincipal?.Identity?.Name"></RadzenTextBox>
+                    </div>
+                    <div class="m-1">
+                        <RadzenRating Name="Rating" @bind-Value="LocationReviewDto.Stars"></RadzenRating>
+                        <RadzenRequiredValidator Component="Rating" Text="Review rating is required!" DefaultValue="0"/>
+                    </div>
+                    <div class="m-1">
+                        <RadzenButton ButtonType="ButtonType.Submit">Submit</RadzenButton>
+                    </div>
+                    <div class="m-1">
+                        <RadzenButton Click="@OnCancelCreateReview">Cancel</RadzenButton>
+                    </div>
+                </div>
+                <div style="width: -webkit-fill-available; display: flex; flex-direction: column">
+                    <div style="margin-bottom: 10px; display: flex;">
+                        <RadzenTextBox Name="ManagerName" @bind-Value="LocationReviewDto.ManagerName" Placeholder="Manager Name"></RadzenTextBox>
+                        <RadzenRequiredValidator Component="ManagerName" Text="Manager name is required!" />
+                        <RadzenDropDown TValue="string" Name="ManagerType" @bind-Value="_managerType" SelectedItemChanged="OnManagerTypeSelectionChange" Placeholder="Manager Type" Data="@ManagerTypes"></RadzenDropDown>
+                        <RadzenRequiredValidator Component="ManagerType" Text="Manager type is required!" DefaultValue="@null"/>
+                        <RadzenDropDown Multiple="true" Chips="true" MaxSelectedLabels="20" AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Data=@ManagerAttributes @bind-Value="MultipleAttributes"/>
+                    </div>
+                    <RadzenTextArea Name="ReviewContent" @bind-Value="LocationReviewDto.Content" Placeholder="Review" Style="width: -webkit-fill-available; height: -webkit-fill-available"></RadzenTextArea>
+                    <RadzenRequiredValidator   Component="ReviewContent" Text="Review message is required!" />
+                </div>
+            </div>
+        }
+    </RadzenCard>
+</RadzenTemplateForm>

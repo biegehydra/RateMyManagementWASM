@@ -1,0 +1,98 @@
+﻿@page "/company/{CompanyId}"
+@using RateMyManagementWASM.Shared.Dtos
+@if (_company != null)
+{
+    <PageTitle>@_company.Name</PageTitle>
+    <div class="flex-down page-container">
+        <div class="head">
+            <div>
+                <RadzenCard>Overall Rating: @_company.GetRating().ToString("0.00")</RadzenCard>
+                <RatingChart Ratings="@_company.Locations.Select(x => (int)Math.Round(x.GetRating()))"></RatingChart>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                @if (!_editing)
+                {
+                    <img src="@_company.GetLogoUrl()"/>
+                    <h1 align="center">@_company.Name</h1>
+                    <h3>@_company.Industry</h3>
+                    <p>@_company.Description</p>
+                }
+                else
+                {
+                    <RadzenTemplateForm Style="display: flex; flex-direction: column; align-items: center" TItem="CompanyDto" Data="_companyDto">
+                        <RadzenText>Update Image</RadzenText>
+                        <AddImage  @ref="_addImage" ImageUploaded="@OnImageUploaded"></AddImage>
+                        <RadzenTextBox Placeholder="Name" Style="font-size: 1rem;" @bind-Value="_companyDto.Name"></RadzenTextBox>
+                        <RadzenTextBox Style="font-size: 1rem; margin-top: 0.5rem;" Placeholder="Industry" @bind-Value="_companyDto.Industry" ></RadzenTextBox>
+                        <RadzenTextBox Style="font-size: 1rem; margin-top: 0.5rem;" Placeholder="Description" @bind-Value="_companyDto.Description" ></RadzenTextBox>
+                        <RadzenButton Style="margin-top: 1rem;" Click="@(OnCompanyChangesSaved)">Save Changes</RadzenButton>
+                    </RadzenTemplateForm>
+                }
+            </div>
+            <div>
+                <AuthorizeView Policy="@PolicyTypes.CompanyManager.ToString()" Resource="_company">
+                    <div style="display: flex; justify-content: end">
+                        @if (_editing)
+                        {
+                            <img @onclick="@OnStopEditing"
+                         style="height: 2em; width: 2em; background: white; cursor: pointer; margin: 10px" src="\Images\Icons\Cancel.png">
+                        }
+                        else
+                        {
+                            <img @onclick="@OnBeginEditing"
+                         style="height: 2em; width: 2em; background: white; cursor: pointer; margin: 10px" src="\Images\Icons\Edit.png">
+                        }
+                    </div>
+                </AuthorizeView>
+            </div>
+        </div>
+        <hr/>
+        <div class="locations-ratings" style="display: flex; flex-direction: column; align-items: center; padding: 10px;">
+            <div class="flex-down locations">
+                <h2>
+                    Locations
+                </h2>
+                <AuthorizeView Policy="@PolicyTypes.CompanyManager.ToString()" Resource="_company">
+                    <Authorized>
+                        <RadzenText>Missing Location?</RadzenText>
+                        @if (!_creatingLocation)
+                        {
+                            <RadzenButton Click="@(() => _creatingLocation = true)">Create location</RadzenButton>
+                        }
+                        else
+                        {
+                            <div class="m-1">
+                                <RadzenTextBox @bind-Value="_locationAddress" Placeholder="Address"></RadzenTextBox>
+                            </div>
+                            <div class="m-1">
+                                <RadzenTextBox Placeholder="City" @bind-Value="_locationCity"></RadzenTextBox>
+                            </div>
+                            <div class="m-1">
+                                <RadzenButton Click="OnSubmitLocation">Submit</RadzenButton>
+                            </div>
+                            <div class="m-1">
+                                <RadzenButton Click="@(() => _creatingLocation = false)">Cancel</RadzenButton>
+                            </div>
+                        }
+                    </Authorized>
+                </AuthorizeView>
+                <div>
+                    <RadzenTextBox Placeholder="Address" Style="margin-top: 10px;" @bind-Value="Query" ></RadzenTextBox>
+                    <RadzenButton>Search</RadzenButton>
+
+                </div>
+                @foreach (var location in _queriedLocations)
+                {
+                    <RadzenCard Style="padding: 0px 10px; margin: 10px; width: 95%; cursor: pointer;" @onclick="@(() => Navaway(location.Id))">
+                        <div class="review">
+                            <p>@location.Address</p>
+                            <p>@location.City</p>
+                            <h1>@location.GetRating().ToString("0.00")</h1>
+                        </div>
+                    </RadzenCard>
+                }
+            </div>
+        </div>
+    </div>
+}
+

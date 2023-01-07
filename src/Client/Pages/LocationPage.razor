@@ -1,0 +1,63 @@
+﻿@page "/company/location/{Id}"
+@using RateMyManagementWASM.Shared.Dtos
+@if (_location != null)
+{
+    <PageTitle>@(_location.Company.Name + " " + _location.City)</PageTitle>
+    <div class="d-flex flex-column align-items-center">
+        <div class="head">
+            <div style="margin: 10px;">
+                <RadzenCard>Overall Rating: @_location.GetRating().ToString("0.00")</RadzenCard>
+                <RatingChart Ratings="@_location.LocationReviews.Select(x => x.Stars)"></RatingChart>
+            </div>
+            <div class="d-flex flex-column align-items-center">
+                <img style="height: 10em; width: 10em; border-radius: 50%" src="@_location.Company.GetLogoUrl()"/>
+                <h1 align="center">@_location.Company.Name</h1>
+                <h3>@_location.Company.Industry</h3>
+                <p>@_location.Company.Description</p>
+                @if (!_editing)
+                {
+                    <p>@_location.City</p>
+                    <p>@_location.Address</p>
+                }
+                else
+                {
+                    <RadzenTemplateForm Style="display: flex; flex-direction: column" TItem="LocationDto" Data="_locationDto" Submit="OnSaveLocationChanges">
+                        <RadzenTextBox Style="font-size: 1rem;" Placeholder="City" @bind-Value="_location.City"></RadzenTextBox>
+                        <RadzenTextBox Style="font-size: 1rem; margin-top: 0.5rem;" Placeholder="Address" @bind-Value="_location.Address"></RadzenTextBox>
+                        <RadzenButton Style="margin-top: 1rem;" ButtonType="ButtonType.Submit">Save Changes</RadzenButton>
+                    </RadzenTemplateForm>
+                }
+            </div>
+            <div>
+                <AuthorizeView Policy="@PolicyTypes.LocationManager.ToString()" Resource="_location">
+                    <div style="display: flex; justify-content: end">
+                        @if (_editing)
+                        {
+                            <img @onclick="@(() => _editing = !_editing)"
+                                 style="height: 2em; width: 2em; border-radius: 50%; background: white; cursor: pointer; margin: 10px" src="\Images\Icons\Cancel.png">
+                        }
+                        else
+                        {
+                            <img @onclick="@(() => _editing = !_editing)"
+                                 style="height: 2em; width: 2em; border-radius: 50%; background: white; cursor: pointer; margin: 10px" src="\Images\Icons\Edit.png">
+                        }
+                    </div>
+                </AuthorizeView>
+            </div>
+        </div>
+        <hr style="width: 100%"/>
+        <RadzenMenu Click="@OnSortByClicked">
+            <RadzenMenuItem Text="Sort by">
+                <RadzenMenuItem Icon="hourglass_full" Text="Most Recent"></RadzenMenuItem>
+                <RadzenMenuItem Icon="hourglass_empty" Text="Least Recent"></RadzenMenuItem>
+                <RadzenMenuItem Icon="account_circle" Text="Sender Username"></RadzenMenuItem>
+                <RadzenMenuItem Icon="face" Text="Employee Name" ></RadzenMenuItem>
+            </RadzenMenuItem>
+        </RadzenMenu>
+        <LocationReviewForm LocationId="@_location.Id" SubmitCallback="OnSubmitReview"></LocationReviewForm>
+        @foreach (var review in _location.LocationReviews)
+        {
+            <LocationReviewComponent LocationReview="@review"></LocationReviewComponent>
+        }
+    </div>
+}
