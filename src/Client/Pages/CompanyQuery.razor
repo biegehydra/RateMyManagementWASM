@@ -21,12 +21,12 @@
     @foreach (var company in CompaniesQueried)
     {
         <RadzenCard Style="cursor: pointer; width: 95%; margin-top: 15px; position: relative; display: flex; justify-content: space-between" @onclick="@(()=> NavigateToCompany(company.Id))">
-            <h1 style="position: absolute; top: 10px; right: 10px;">@company.GetRating().ToString("0.00")</h1>
+            <h1 style="position: absolute; top: 10px; right: 10px;">@company.Rating.ToString("0.00")</h1>
             <div>
                 <h1>@company.Name</h1>
                 <h3>@company.Industry</h3>
             </div>
-            <img style="border-radius: 50%; height: 5em; width: 5em; margin-right: 5em;" src="@company.GetLogoUrl()"/>
+            <img style="border-radius: 50%; height: 5em; width: 5em; margin-right: 5em;" src="@company.LogoUrl"/>
         </RadzenCard>
     }
 </div>

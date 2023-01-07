@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RateMyManagementWASM.Server.Data;
@@ -20,29 +19,10 @@ namespace RateMyManagementWASM.Server.Controllers
             _context = context;
             _mapper = mapper;
         }
-
-        [HttpPost("query/{query}")]
-        public async Task<ActionResult<IEnumerable<Company>>> Query(string query, [FromBody] string[] includes,
-            [FromQuery(Name = "startswith")] string startsWith)
+        [HttpGet("querywithrating/{query}")]
+        public async Task<ActionResult<IEnumerable<CompanyWithRatingDto>>> QueryWithRating(string query, [FromQuery(Name = "startswith")] string startsWith)
         {
-            IEnumerable<Company> response;
-            if (startsWith == "true")
-            {
-                response = _context.Companies.IncludeMultiple(includes).Where(x => x.Name.StartsWith(query))
-                    .AsEnumerable();
-            }
-            else
-            {
-                response = _context.Companies.IncludeMultiple(includes).Where(x => x.Name.Contains(query))
-                    .AsEnumerable();
-            }
-
-            return Ok(response);
-        }
-        [HttpPost("querywithrating/{query}")]
-        public async Task<ActionResult<IEnumerable<CompanyWithRatingDto>>> QueryWithRating(string query, [FromBody] string[] includes,
-    [FromQuery(Name = "startswith")] string startsWith)
-        {
+            var includes = new[] {"Locations", "Locations.LocationReviews"};
             IEnumerable<CompanyWithRatingDto> response;
             if (startsWith == "true")
             {

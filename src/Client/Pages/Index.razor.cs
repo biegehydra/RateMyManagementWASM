@@ -40,7 +40,7 @@ namespace RateMyManagementWASM.Client.Pages
             {
                 _currentPageCompanies = new List<CompanyWithRatingDto>();
                 _loading = true;
-                var response = await companyService.QueryWithRatings(str, HttpCompanyService.AllIncludes, true);
+                var response = await companyService.QueryWithRatings(str, true);
                 _currentPageCompanies = response.ToList();
             }
             catch (Exception exception)

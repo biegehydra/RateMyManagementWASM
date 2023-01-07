@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using RateMyManagementWASM.Client.Services;
 using RateMyManagementWASM.Shared.Data;
+using RateMyManagementWASM.Shared.Dtos;
 
 namespace RateMyManagementWASM.Client.Pages
 {
@@ -12,10 +13,10 @@ namespace RateMyManagementWASM.Client.Pages
         public string? Query { get; set; }
 
         private bool _loading;
-        public List<Company> CompaniesQueried { get; set; } = new List<Company>();
+        public List<CompanyWithRatingDto> CompaniesQueried { get; set; } = new ();
         protected override async Task OnParametersSetAsync()
         {
-            CompaniesQueried = new List<Company>();
+            CompaniesQueried = new ();
             await GetQueriedCompanies();
         }
 
@@ -23,7 +24,7 @@ namespace RateMyManagementWASM.Client.Pages
         {
             if (Query == null) return;
             _loading = true;
-            var temp = await companyService.Query(Query, HttpCompanyService.AllIncludes);
+            var temp = await companyService.QueryWithRatings(Query);
             CompaniesQueried = temp.ToList();
             _loading = false;
         }

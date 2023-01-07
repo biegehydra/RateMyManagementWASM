@@ -36,7 +36,12 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAutoMapper(typeof(CompanyProfile), typeof(LocationProfile), typeof(LocationReviewProfile));
 
 builder.Services.AddAuthentication()
-    .AddIdentityServerJwt();
+    .AddIdentityServerJwt()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    });
 
 
 builder.Services.AddControllersWithViews()
