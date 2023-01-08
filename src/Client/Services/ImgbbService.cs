@@ -11,7 +11,7 @@ public class ImgbbService : IImageService
 
     public ImgbbService()
     {
-        _clientKey = "";
+        _clientKey = "435d50013041bc9be47a2a8986817511";
     }
 
     public async Task<ImgbbUploadResponse> UploadImageAsync(byte[] imageArray)
@@ -35,10 +35,5 @@ public class ImgbbService : IImageService
         {
             throw new Exception("Error uploading image");
         }
-    }
-
-    public async Task DeleteImageAsync(string deleteUrl)
-    {
-        // Deprecated
     }
 }

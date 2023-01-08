@@ -2,40 +2,8 @@
     bottom: 15px;
     right: 15px;
 }
-.company-details {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-}
-.circle {
-    border-radius: 50%;
-}
-.appear-small-screen {
-    display: none;
-}
-img {
-    height: 5em;
-    width: 5em;
-}
-.company-details-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 @media only screen and (max-width: 1200px) {
     .alph-search {
         display: none;
-    }
-}
-@media only screen and (max-width: 600px) {
-    .dissapear-on-small-screen {
-        display: none;
-    }
-    .appear-small-screen {
-        display: inline-block;
-    }
-    .company-details {
-        display: flex;
-        justify-content: center;
-        width: 100%
     }
 }

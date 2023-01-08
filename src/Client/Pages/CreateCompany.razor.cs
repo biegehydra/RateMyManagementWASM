@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using RateMyManagementWASM.Client.Services;
+using RateMyManagementWASM.Client.Shared;
 using RateMyManagementWASM.Shared.Data;
 using RateMyManagementWASM.Shared.Dtos;
 
@@ -10,6 +11,7 @@ namespace RateMyManagementWASM.Client.Pages
         [Inject] private HttpCompanyService _companyService { get; set; }
         [Inject] private NavigationManager _navigationManager { get; set; }
         [Parameter] public string query { get; set; }
+        public AddImage? AddImage { get; set; }
         string _companyName = string.Empty;
         string _companyIndustry = string.Empty;
         string _companyDescription = string.Empty;

@@ -19,7 +19,8 @@
                 <RadzenRequiredValidator Component="description" DefaultValue="@string.Empty"></RadzenRequiredValidator>
             </div>
             <div>
-                <AddImage ImageUploaded="OnImageUploaded"></AddImage>
+                <h2 class="m-2">Add Image</h2>
+                <AddImage @ref="AddImage"></AddImage>
             </div>
             <div>
                 <RadzenButton ButtonType="ButtonType.Submit" Click="CreateCompanyAsync">Submit</RadzenButton>

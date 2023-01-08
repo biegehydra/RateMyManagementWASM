@@ -9,7 +9,7 @@ namespace RateMyManagementWASM.Client.Shared
     public partial class AddImage
     {
         [Inject] private IImageService _imageService { get; set; }
-        [Parameter] public EventCallback<ImgbbUploadResponse> ImageUploaded { get; set; }
+        public EventCallback<ImgbbUploadResponse> ImageUploaded { get; set; }
         private ImgbbUploadResponse? _uploadResponse;
         private string? _displayUrl;
         private bool _error;
@@ -27,10 +27,6 @@ namespace RateMyManagementWASM.Client.Shared
                 var result = await _imageService.UploadImageAsync(mem.ToArray());
                 if (result.success)
                 {
-                    if (_uploadResponse != null)
-                    {
-                        await DeleteImage(_uploadResponse.data.delete_url);
-                    }
                     _uploadResponse = result;
                     await ImageUploaded.InvokeAsync(_uploadResponse);
                 }
@@ -48,14 +44,6 @@ namespace RateMyManagementWASM.Client.Shared
                 Console.WriteLine("Error occured uploading image" + e.Message);
             }
         }
-        private async Task DeleteImage(string url)
-        {
-            if (url != null)
-            {
-                await _imageService.DeleteImageAsync(url);
-
-            }
-        }
 
         public void SetImage(string url)
         {
@@ -63,10 +51,6 @@ namespace RateMyManagementWASM.Client.Shared
         }
         public async Task Reset(bool deleteImage)
         {
-            if (deleteImage && _uploadResponse != null)
-            {
-                await DeleteImage(_uploadResponse.data.delete_url);
-            }
             _uploadResponse = null;
         }
     }

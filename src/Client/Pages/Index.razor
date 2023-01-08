@@ -15,21 +15,7 @@
     }
     @foreach (var companyDto in _currentPageCompanies)
     {
-        <RadzenCard Style="width: 95%; margin-top: 15px; display: flex;">
-            <div class="company-details">
-                <div class="company-details-left">
-                    <img class="circle" src="@companyDto.LogoUrl"/>
-                    <h3 align="center">@companyDto.Name</h3>
-                    <h5 align="center">@companyDto.Industry</h5>
-                    <h5 align="center"><span class="dissapear-on-small-screen">Rating</span> @companyDto.Rating.ToString("0.00")</h5>
-                    <a class="appear-small-screen" href="@($" /company/{companyDto.Id}")">More details</a>
-                </div>
-                <div class="dissapear-on-small-screen">
-                    <p>@companyDto.Description</p>
-                    <a href="@($" /company/{companyDto.Id}")">More details</a>
-                </div>
-            </div>
-        </RadzenCard>
+        <CompanySearchView CompanyDto="companyDto"></CompanySearchView>
     }
     <AdminDiv>
         <div class="position-fixed bottom-right">
