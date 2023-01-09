@@ -21,7 +21,7 @@
                 {
                     <RadzenTemplateForm Style="display: flex; flex-direction: column; align-items: center" TItem="CompanyDto" Data="_companyDto">
                         <RadzenText>Update Image</RadzenText>
-                        <AddImage  @ref="_addImage" ImageUploaded="@OnImageUploaded"></AddImage>
+                        <AddImage  @ref="_addImage"></AddImage>
                         <RadzenTextBox Placeholder="Name" Style="font-size: 1rem;" @bind-Value="_companyDto.Name"></RadzenTextBox>
                         <RadzenTextBox Style="font-size: 1rem; margin-top: 0.5rem;" Placeholder="Industry" @bind-Value="_companyDto.Industry" ></RadzenTextBox>
                         <RadzenTextBox Style="font-size: 1rem; margin-top: 0.5rem;" Placeholder="Description" @bind-Value="_companyDto.Description" ></RadzenTextBox>

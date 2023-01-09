@@ -92,6 +92,7 @@ namespace RateMyManagementWASM.Client.Shared
             LocationReviewDto.SenderUsername = _claimsPrincipal.Identity.Name;
             LocationReviewDto.Id = Guid.NewGuid().ToString();
             LocationReviewDto.LocationId = LocationId;
+            LocationReviewDto.ApplicationUserId = _claimsPrincipal.Claims.Where(x => x.Type == "sub").FirstOrDefault().Value;
             await _locationReviewService.Save(LocationReviewDto);
             ResetForm();
             _creatingReview = false;

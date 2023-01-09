@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RateMyManagementWASM.Server.Data;
 using RateMyManagementWASM.Shared.Data;
@@ -11,8 +12,8 @@ namespace RateMyManagementWASM.Server.Controllers
     public class LocationReviewController : ControllerBase, IEntityController<LocationReview, LocationReviewDto>
     {
         private ApplicationDbContext _context;
-
-        public LocationReviewController(ApplicationDbContext context)
+        private IMapper _mapper;
+        public LocationReviewController(ApplicationDbContext context, IMapper _mapper)
         {
             _context = context;
         }
@@ -37,6 +38,7 @@ namespace RateMyManagementWASM.Server.Controllers
         public async Task<ActionResult> Save([FromBody] LocationReviewDto entity)
         {
             var location = await _context.Locations.Include(x => x.LocationReviews).FirstOrDefaultAsync(x => x.Id == entity.LocationId);
+            var user = await _context.Users.FindAsync(entity.ApplicationUserId);
             if (location == null)
             {
                 return NotFound();
@@ -45,6 +47,7 @@ namespace RateMyManagementWASM.Server.Controllers
             var locationReview = new LocationReview()
             {
                 Id = entity.Id,
+                ApplicationUserId = entity.ApplicationUserId,
                 Content = entity.Content,
                 Location = location,
                 LocationId = entity.LocationId,
@@ -80,9 +83,12 @@ namespace RateMyManagementWASM.Server.Controllers
             foreach (var entity in entities)
             {
                 var location = await locations.FirstAsync(x => x.Id == entity.LocationId);
+                var user = await _context.Users.FindAsync(entity.ApplicationUserId);
+                if (user == null) return NotFound();
                 var locationReview = new LocationReview()
                 {
                     Id = entity.Id,
+                    ApplicationUserId = entity.ApplicationUserId,
                     Content = entity.Content,
                     Location = location,
                     LocationId = entity.LocationId,

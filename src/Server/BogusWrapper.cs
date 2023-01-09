@@ -1,7 +1,8 @@
 ﻿using Bogus;
+using RateMyManagementWASM.Server.Models;
 using RateMyManagementWASM.Shared.Data;
 
-namespace RateMyManagementWASM.Shared
+namespace RateMyManagementWASM.Server
 {
     public class BogusWrapper
     {
@@ -32,7 +33,7 @@ namespace RateMyManagementWASM.Shared
             return faker.Generate(amount);
         }
 
-        public static IEnumerable<LocationReview> GenerateFakeLocationReviews(Location location, int amount)
+        public static IEnumerable<LocationReview> GenerateFakeLocationReviews(Location location, ApplicationUser user, int amount)
         {
             var random = new Random();
             var today = DateTime.Now;
@@ -44,6 +45,7 @@ namespace RateMyManagementWASM.Shared
                 .RuleFor(lr => lr.ManagerType, (f, s) => f.PickRandom<ManagerType>().ToString())
                 .RuleFor(lr => lr.SenderUsername, (f, s) => f.Internet.UserName())
                 .RuleFor(lr => lr.LocationId, location.Id)
+                .RuleFor(x => x.ApplicationUserId, user.Id)
                 .RuleFor(lr => lr.Location, location)
                 .RuleFor(lr => lr.Type,
                     (f, s) => f.PickRandom(new ReviewType[]

@@ -1,4 +1,8 @@
-﻿.company-details {
+﻿.cont {
+    width: 95%;
+    margin: 1em;
+}
+.company-details {
     display: grid;
     grid-template-columns: 1fr 3fr;
 }
@@ -30,5 +34,8 @@ img {
         display: flex;
         justify-content: center;
         width: 100%
+    }
+    .cont {
+        width: 75%;
     }
 }

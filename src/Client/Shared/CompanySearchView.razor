@@ -1,19 +1,22 @@
 ﻿@using RateMyManagementWASM.Shared.Dtos
-<RadzenCard Style="width: 95%; margin-top: 15px; display: flex;">
-    <div class="company-details">
-        <div class="company-details-left">
-            <img class="circle" src="@CompanyDto.LogoUrl"/>
-            <h3 align="center">@CompanyDto.Name</h3>
-            <h5 align="center">@CompanyDto.Industry</h5>
-            <h5 align="center">Rating: @CompanyDto.Rating.ToString("0.00")</h5>
-            <a class="appear-small-screen" href="@($" /company/{CompanyDto.Id}")">More details</a>
+<div class="cont">
+    <RadzenCard Style="display: flex;" >
+        <div class="company-details">
+            <div class="company-details-left">
+                <img class="circle" src="@CompanyDto.LogoUrl"/>
+                <h2 align="center">@CompanyDto.Name</h2>
+                <h5 align="center">@CompanyDto.Industry</h5>
+                <h6 align="center">Rating: @CompanyDto.Rating.ToString("0.00")</h6>
+                <a class="appear-small-screen" href="@($" /company/{CompanyDto.Id}")">More details</a>
+            </div>
+            <div class="dissapear-on-small-screen">
+                <p>@CompanyDto.Description</p>
+                <a style="font-size: 1.5em;" href="@($" /company/{CompanyDto.Id}")">More details</a>
+            </div>
         </div>
-        <div class="dissapear-on-small-screen">
-            <p>@CompanyDto.Description</p>
-            <a href="@($" /company/{CompanyDto.Id}")">More details</a>
-        </div>
-    </div>
-</RadzenCard>
+    </RadzenCard>
+</div>
+
 @code
 {
     [Parameter] public CompanyWithRatingDto CompanyDto { get; set; }

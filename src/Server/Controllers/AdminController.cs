@@ -20,6 +20,7 @@ public class AdminController : ControllerBase
     [HttpPost("populatedb")]
     public async Task<ActionResult> PopulateDb([FromBody] PopulateDbRequest request)
     {
+        var adminAccount = _context.Users.FirstOrDefault(x => x.Email == "admin@gmail.com");
         if (!IsAdmin(User.Claims)) return Forbid();
         var companies = BogusWrapper.GenerateFakeCompanies(request.Companies);
         foreach (var company in companies)
@@ -28,7 +29,7 @@ public class AdminController : ControllerBase
             foreach (var companyLocation in companyLocations)
             {
                 var locationReviews =
-                    BogusWrapper.GenerateFakeLocationReviews(companyLocation, request.LocationReviewsPerLocation);
+                    BogusWrapper.GenerateFakeLocationReviews(companyLocation, adminAccount, request.LocationReviewsPerLocation);
                 companyLocation.LocationReviews.AddRange(locationReviews);
             }
             company.Locations.AddRange(companyLocations);

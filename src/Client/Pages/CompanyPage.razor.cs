@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Components;
 using RateMyManagementWASM.Client.IServices;
 using RateMyManagementWASM.Client.Services;
 using RateMyManagementWASM.Client.Shared;
@@ -7,7 +8,7 @@ using RateMyManagementWASM.Shared.Dtos;
 
 namespace RateMyManagementWASM.Client.Pages
 {
-    public partial class CompanyPage
+    public partial class CompanyPage : IDisposable
     {
         [Inject] private HttpLocationService _locationService { get; set; }
         [Inject] private HttpCompanyService _companyService { get; set; }
@@ -39,6 +40,7 @@ namespace RateMyManagementWASM.Client.Pages
         }
         private string _locationAddress = String.Empty;
         private string _locationCity = String.Empty;
+
         protected override async Task OnInitializedAsync()
         {
             await GetCompanyAsync();
@@ -90,6 +92,7 @@ namespace RateMyManagementWASM.Client.Pages
             {
                 await _addImage.Reset(false);
             }
+            _company.LogoUrl = _companyDto.LogoUrl;
         }
         private async Task OnBeginEditing()
         {
@@ -97,7 +100,8 @@ namespace RateMyManagementWASM.Client.Pages
             await Task.Delay(2);
             if (_addImage != null)
             {
-                _addImage.SetImage(_company.LogoUrl);
+                _addImage.UploadEvent += OnImageUploaded;
+                _addImage?.SetImage(_company.LogoUrl ?? "");
             }
         }
         private async Task OnStopEditing()
@@ -112,6 +116,25 @@ namespace RateMyManagementWASM.Client.Pages
         {
             _companyDto.LogoUrl = response.data.display_url;
             _companyDto.LogoDeleteUrl = response.data.delete_url;
+        }
+
+        private void ReleaseUnmanagedResources()
+        {
+            if (_addImage != null && _addImage.UploadEvent != null)
+            {
+                _addImage!.UploadEvent -= OnImageUploaded;
+            }
+        }
+
+        public void Dispose()
+        {
+            ReleaseUnmanagedResources();
+            GC.SuppressFinalize(this);
+        }
+
+        ~CompanyPage()
+        {
+            ReleaseUnmanagedResources();
         }
     }
 }

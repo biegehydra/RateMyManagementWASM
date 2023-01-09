@@ -5,5 +5,6 @@ namespace RateMyManagementWASM.Server.Models
 {
     public class ApplicationUser : IdentityUser, IEntity
     {
+        public List<LocationReview> Reviews { get; set; }
     }
 }

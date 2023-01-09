@@ -9,7 +9,7 @@ namespace RateMyManagementWASM.Client.Shared
     public partial class AddImage
     {
         [Inject] private IImageService _imageService { get; set; }
-        public EventCallback<ImgbbUploadResponse> ImageUploaded { get; set; }
+        public Action<ImgbbUploadResponse> UploadEvent{ get; set; }
         private ImgbbUploadResponse? _uploadResponse;
         private string? _displayUrl;
         private bool _error;
@@ -28,7 +28,7 @@ namespace RateMyManagementWASM.Client.Shared
                 if (result.success)
                 {
                     _uploadResponse = result;
-                    await ImageUploaded.InvokeAsync(_uploadResponse);
+                    UploadEvent.Invoke(_uploadResponse);
                 }
                 else
                 {

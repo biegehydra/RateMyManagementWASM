@@ -6,6 +6,7 @@ namespace RateMyManagementWASM.Shared.Data
     {
         [Key]
         public string Id { get; set; }
+        public string ApplicationUserId { get; set; }
         public Location Location { get; set; }
         public string LocationId { get; set; }
         public int Stars { get; set; }
