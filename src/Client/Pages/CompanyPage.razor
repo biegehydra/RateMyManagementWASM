@@ -13,9 +13,9 @@
                 @if (!_editing)
                 {
                     <img src="@_company.GetLogoUrl()"/>
-                    <h1 align="center">@_company.Name</h1>
-                    <h3>@_company.Industry</h3>
-                    <p>@_company.Description</p>
+                    <RadzenText TextStyle="TextStyle.H2" TextAlign="TextAlign.Center">@_company.Name</RadzenText>
+                    <RadzenText TextStyle="TextStyle.H4" TextAlign="TextAlign.Center">@_company.Industry</RadzenText>
+                    <p align="center">@_company.Description</p>
                 }
                 else
                 {

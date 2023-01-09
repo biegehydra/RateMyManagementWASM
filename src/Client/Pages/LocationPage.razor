@@ -11,9 +11,9 @@
             </div>
             <div class="d-flex flex-column align-items-center">
                 <img style="height: 10em; width: 10em; border-radius: 50%" src="@_location.Company.GetLogoUrl()"/>
-                <h1 align="center">@_location.Company.Name</h1>
-                <h3>@_location.Company.Industry</h3>
-                <p>@_location.Company.Description</p>
+                    <RadzenText TextStyle="TextStyle.H2" TextAlign="TextAlign.Center">@_location.Company.Name</RadzenText>
+                    <RadzenText TextStyle="TextStyle.H4" TextAlign="TextAlign.Center">@_location.Company.Industry</RadzenText>
+                    <p align="center">@_location.Company.Description</p>
                 @if (!_editing)
                 {
                     <p>@_location.City</p>
