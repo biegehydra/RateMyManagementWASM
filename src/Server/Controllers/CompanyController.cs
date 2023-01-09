@@ -32,8 +32,9 @@ namespace RateMyManagementWASM.Server.Controllers
             }
             else
             {
-                var result = _context.Companies.IncludeMultiple(includes).Where(x => x.Name.Contains(query))
+                var result = _context.Companies.IncludeMultiple(includes).Where(x => x.Name.ToLower().Contains(query.ToLower()))
                     .AsEnumerable();
+                var filtered = result.Where(x => x.Name.ToLower().Contains(query.ToLower()));
                 response = _mapper.Map<IEnumerable<Company>, IEnumerable<CompanyWithRatingDto>>(result);
             }
 

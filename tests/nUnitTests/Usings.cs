@@ -1,0 +1,11 @@
+global using NUnit.Framework;
+global using AutoMapper;
+global using Duende.IdentityServer.EntityFramework.Options;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Options;
+global using RateMyManagementWASM.Server.Controllers;
+global using RateMyManagementWASM.Server.Data;
+global using RateMyManagementWASM.Shared.Data;
+global using RateMyManagementWASM.Shared.Dtos;
+global using RateMyManagementWASM.Shared.Profiles;
