@@ -2,7 +2,7 @@
     <div class="position-relative d-flex flex-row w-100">
         <div style=" border-right: 1px solid black; padding-right: 10px; display: flex; flex-direction: column; align-items: center; width:15%">
             <RadzenText TextAlign="TextAlign.Center">Position: <span style="white-space: nowrap">@LocationReview.ManagerType</span></RadzenText>
-            <RadzenText Style="margin-top: 10px; margin-bottom: 10px;" TextAlign="TextAlign.Center">Manager: <br/> @LocationReview.ManagerName</RadzenText>
+            <RadzenText Style="margin-top: 10px; margin-bottom: 10px;" TextAlign="TextAlign.Center">Manager: <br /> @LocationReview.ManagerName</RadzenText>
             <h1><b>@LocationReview.Stars</b></h1>
         </div>
         <div style="padding-left: 10px; width: 85%;">
@@ -12,7 +12,7 @@
             </div>
             <hr style="height: 2px; color: black" />
             <RadzenContent Style="padding: 0;">@LocationReview.Content</RadzenContent>
-            <hr style="height: 2px; color: black"/>
+            <hr style="height: 2px; color: black" />
             <div style="display: flex; flex-wrap: wrap;">
                 @foreach (var attribut in LocationReview.ManagerAttributes.Split(","))
                 {
@@ -21,12 +21,12 @@
             </div>
             @if (LocationReview.Type == ReviewType.Employee.ToString())
             {
-                <h6 style="position: absolute; top: 5px; right: 5px; color: blue; background-color: black; padding: 3px;">Employee Review</h6>
+                <RadzenBadge Style="position: absolute; top: 5px; right: 5px;" Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Secondary" Text="Employee Review" />
             }
         </div>
     </div>
 </RadzenCard>
 @code {
-    [Parameter] 
+    [Parameter]
     public LocationReview LocationReview { get; set; }
 }

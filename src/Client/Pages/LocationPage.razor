@@ -46,6 +46,7 @@
             </div>
         </div>
         <hr style="width: 100%"/>
+        <LocationReviewForm LocationId="@_location.Id" SubmitCallback="OnSubmitReview"></LocationReviewForm>
         <RadzenMenu Click="@OnSortByClicked">
             <RadzenMenuItem Text="Sort by">
                 <RadzenMenuItem Icon="hourglass_full" Text="Most Recent"></RadzenMenuItem>
@@ -54,10 +55,9 @@
                 <RadzenMenuItem Icon="face" Text="Employee Name" ></RadzenMenuItem>
             </RadzenMenuItem>
         </RadzenMenu>
-        <LocationReviewForm LocationId="@_location.Id" SubmitCallback="OnSubmitReview"></LocationReviewForm>
         @foreach (var review in _location.LocationReviews)
         {
-            <LocationReviewComponent LocationReview="@review"></LocationReviewComponent>
+            <LocationReviewModel LocationReview="@review"></LocationReviewModel>
         }
     </div>
 }

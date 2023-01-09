@@ -81,16 +81,18 @@
                     <RadzenButton>Search</RadzenButton>
 
                 </div>
-                @foreach (var location in _queriedLocations)
-                {
-                    <RadzenCard Style="padding: 0px 10px; margin: 10px; width: 95%; cursor: pointer;" @onclick="@(() => Navaway(location.Id))">
-                        <div class="review">
-                            <p>@location.Address</p>
-                            <p>@location.City</p>
-                            <h1>@location.GetRating().ToString("0.00")</h1>
-                        </div>
-                    </RadzenCard>
-                }
+                <div style="display: grid; grid-template-columns: repeat( auto-fit, minmax(400px, 1fr)); width: 100%">
+                    @foreach (var location in _queriedLocations)
+                    {
+                        <RadzenCard Style="padding: 0px 10px; margin: 10px; width: 95%; cursor: pointer;" @onclick="@(() => Navaway(location.Id))">
+                            <div class="review">
+                                <p>@location.Address</p>
+                                <p>@location.City</p>
+                                <h1>@location.GetRating().ToString("0.00")</h1>
+                            </div>
+                        </RadzenCard>
+                    }
+                </div>
             </div>
         </div>
     </div>
