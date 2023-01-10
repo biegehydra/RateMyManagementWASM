@@ -1,11 +1,15 @@
 ﻿@page "/"
 <PageTitle>RateMyManagement</PageTitle>
 <div class="d-flex flex-column align-items-center position-relative">
-    <RadzenText TextStyle="TextStyle.H2" TextAlign="TextAlign.Center">Rate My Management</RadzenText>
+    <RadzenText TextStyle="TextStyle.H2" TextAlign="TextAlign.Center" Style="margin-bottom: 5px;">Rate My Management</RadzenText>
+    <RadzenText TextStyle="TextStyle.Body1" TextAlign="TextAlign.Center">
+        A place for customers and employees alike to rate and comment on the interactions they've had with staff and management
+    </RadzenText>
     <CompanySearch></CompanySearch>
-    <RadzenText TextStyle="TextStyle.Body2" TextAlign="TextAlign.Center" Style="margin-top: 15px;">
+    <RadzenText TextStyle="TextStyle.Body2" TextAlign="TextAlign.Center" Style="margin-top: 35px;">
         Enter a company name to get started or use the navigation to filter companies by starting letter
     </RadzenText>
+
     <div class="alph-search">
         <Paginiation MetaData="_pagingMetaData" SelectedPage="@OnPageSelected"></Paginiation>
     </div>
