@@ -1,4 +1,4 @@
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using RateMyManagementWASM.Server.Data;
 using RateMyManagementWASM.Server.Models;

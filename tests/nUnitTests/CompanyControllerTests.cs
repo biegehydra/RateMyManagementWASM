@@ -41,7 +41,6 @@ namespace nUnitTests
             var company = GetObjectResultContent(actionResult);
             Assert.IsInstanceOf<OkObjectResult>(actionResult.Result);
             Assert.AreEqual("Ryan, Rau and Watsica", company.Name);
-            Assert.ReferenceEquals(1, 2);
         }
         [Test]
         public async Task GetBadId_ReturnsBadRequest()

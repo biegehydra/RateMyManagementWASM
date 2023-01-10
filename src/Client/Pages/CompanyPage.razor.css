@@ -54,26 +54,16 @@ hr {
 .review {
     position: relative;
     display: flex;
+    flex-direction: column;
     width: 100%;
     margin: 10px 0px;
-    align-items: center;
-    padding: 25px;
+    align-items: start;
+    padding-bottom: 30px;
 }
 
-    .review p:nth-of-type(1) {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
 
-    .review h1 {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-.review-date {
+.review h1 {
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 0;
 }

@@ -1,11 +1,16 @@
 ﻿@using System.Net
 @using System.Text
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject HttpClient _client
 @inject NavigationManager _navigationManager
 <AuthorizeView>
     <Authorized>
-        <a href="Identity/Account/Manage">Hello, @context.User.Identity?.Name!</a>
-        <a href="Identity/Account/Login" @onclick="OnClick">Logout</a>
+        <RadzenMenu>
+            <RadzenMenuItem Icon="account_box" Text="@($"Hello, {context.User.Identity?.Name!}")">
+                <RadzenMenuItem Text="Manage" Path="Identity/Account/Manage"></RadzenMenuItem>
+                <RadzenMenuItem Click="OnClick" Text="Logout"></RadzenMenuItem>
+            </RadzenMenuItem>
+        </RadzenMenu>
     </Authorized>
     <NotAuthorized>
         <div style="position: relative">
@@ -22,6 +27,6 @@
 {
     private async Task OnClick()
     {
-        await _client.PostAsync("Identity/Account/LogOut", null);
+        _navigationManager.NavigateToLogout("authentication/logout");
     }
 }
